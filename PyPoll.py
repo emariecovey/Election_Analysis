@@ -40,6 +40,20 @@ with open(file_to_load) as election_data:
 #Total number of votes each candidate received
             candidate_votes[candidate_name]= 0
         candidate_votes[candidate_name] =  candidate_votes[candidate_name] + 1
+
+#outputing file to write analysis. Use with so that you don't have to have a closing statement. "W" is so you're writing in it
+with open(file_to_save, "w") as txt_file:
+
+    #write three countries to new file
+    election_results = (
+        f"\nElection Results"
+        f"\n----------------"
+        f"\nTotal Votes: {total_votes:,}"
+        f"\n----------------\n")
+    print (election_results , end="")
+    txt_file.write(election_results)
+
+
 #Percentage of votes each candidate won
     #Iterate through candidate list
     for candidate_name in candidate_votes:
@@ -47,29 +61,29 @@ with open(file_to_load) as election_data:
         votes = candidate_votes[candidate_name] 
         # calculate percentage of votes
         vote_percentage = float(votes)/float(total_votes)*100
+         #print out each candidates name, their vote count, and their percentage of votes
+        candidate_results=(
+            f"{candidate_name}: {votes:,}, {vote_percentage:.1f}%\n")
         # Print the candidate name and percentage of votes  
-        ######print(f"{candidate_name}: received {vote_percentage:.1f}% of the vote")
+        print(candidate_results)
+        txt_file.write(candidate_results)
+
 #The winner of the election based on popular vote
         if (votes > winning_count) and (vote_percentage > winning_percentage):
             winning_count = votes
             winning_percentage = vote_percentage
             winning_candidate = candidate_name
-#print out each candidates name, their vote count, and their percentage of votes
-        print(f"{candidate_name}: {votes:,}, {vote_percentage:.1f}%\n")
+
     winning_candidate_summary = (
     f"-------------------------\n"
     f"Winner: {winning_candidate}\n"
     f"Winning Vote Count: {winning_count:,}\n"
     f"Winning Percentage: {winning_percentage:.1f}%\n"
     f"-------------------------\n")
-    print(winning_candidate_summary)  
+    #print(winning_candidate_summary)  
+    print(winning_candidate_summary)
+    txt_file.write(winning_candidate_summary)
 
     #print(f"Number of total votes: {total_votes}")
     #print(f"These are the candidate options: {candidate_options}")
     #print(candidate_votes)
-#outputing file to write analysis. Use with so that you don't have to have a closing statement. "W" is so you're writing in it
-with open(file_to_save, "w") as txt_file:
-
-    #write three countries to new file
-    txt_file.write("Counties in the Election\n---------------------------\nArapahoe\nDenver")
-    txt_file.write("\nJefferson")
